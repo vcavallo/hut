@@ -327,6 +327,7 @@
   ::
   :: on-peek is for local scries. for front-ending getting initial list of huts.
   :: it returns JSON directly here since it has this single-use.
+  :: (crip (en-json:html .^(json %gx /=hut=/huts/json)))
   ++  on-peek
     |=  =path
     ^-  (unit (unit cage))
