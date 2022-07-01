@@ -204,7 +204,7 @@
       :: whether or not an error, delete the hut and whitlist from our state
       %=  this
         huts  (~(del by huts) hut)
-        ppl   (~(del bi ppl) hut)
+        ppl   (~(del by ppl) hut)
       ==
     ::
     :: a fact is an update about anything we're subcribed to
@@ -222,7 +222,7 @@
             ==
         %=  this
           huts  (~(put by huts) hut msgs.upd)
-          ppl   (~(put bi ppl) hut ppl.upd)
+          ppl   (~(put by ppl) hut ppl.upd)
         ==
       :: new message. save in state and forward to frontend
           %post
@@ -302,7 +302,7 @@
       :-  %hut-did
       !>  ^-  upd
       :+  %init
-          (~(got bi ppl) hut)
+          (~(got by ppl) hut)
         (~(got by huts) hut)
       --
   ::
