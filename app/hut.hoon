@@ -9,17 +9,18 @@
   $%  state-0
   ==
 :: the agent's state type
-+$  state-0 [%0 =huts =ppl]
++$  state-0  [%0 =huts =ppl]
 :: convenience:
 +$  card  card:agent:gall
 --
 
 :: wrap with dbug
 %-  agent:dbug
+!:
 
 :: instantiate the state
 =|  state-0
-=*  state -   :: TODO: wat? is this wing-notation accessing something?
+=*  state  -   :: TODO: wat? is this wing-notation accessing something?
 ^-  agent:gall
 
 :: proper agent core begins.
@@ -35,10 +36,10 @@
     io    ~(. agentio bol)
 
 ::  called when agent is first started
-++  on-init on-init:def
+++  on-init  on-init:def
 
 ::  exports agent state during upgrade.
-++  on-save !>(state)  :: pack the current state in a vase. !> "wrap a hoon noun in its type"
+++  on-save  !>(state)  :: pack the current state in a vase. !> "wrap a hoon noun in its type"
 
 ::  called when exported state is re-imported after upgrade.
 ::  extract state from vase and put it back in agent state
@@ -66,7 +67,7 @@
     ::
     :: handle us posting a new message
         %post  :: handle us posting a new message
-      =/  =path /(scot %p host.hut.act)/[name.hut.act]
+      =/  =path  /(scot %p host.hut.act)/[name.hut.act]
       ?.  =(our.bol host.hut.act) :: remote. send our message
         :_  this
         :~  (~(poke pass:io path) [host.hut.act %hut] [mark vase])
@@ -139,8 +140,8 @@
       :: if not, create the hut and add ourselves
       :-  ~
       %=  this
-        huts (~(put by huts) hut.act ~)
-        ppl  (~(put bi ppl) hut.act our.bol %.y)
+        huts  (~(put by huts) hut.act ~)
+        ppl   (~(put bi ppl) hut.act our.bol %.y)
       ==
     ==
     :: done with local arms
@@ -156,7 +157,7 @@
       :: check its to a hut we own
       ?>  =(our.bol host.hut.act)
       :: make sure it exists
-      ?>  (~(has by huts) host.hut.act)
+      ?>  (~(has by huts) hut.act)
       :: make sure they're posting as their own identity
       ?>  =(src.bol who.msg.act)  :: TODO: how does src.bol work here?
       :: check they're whitlisted
@@ -268,10 +269,10 @@
     =/  =hut  [(slav %p i.path) i.t.path]
     ::
     :: check if it's our own ship subscribing (this is from our own front-end)
-    ?:  =(our.bol src.hut)
+    ?:  =(our.bol src.bol)
       :: it's us.
       :: if it's our own hut, send out init state
-      ?: =(our.bol host.hut)
+      ?:  =(our.bol host.hut)
         [[(init hut) ~] this]
       ::
       :: otherwise its someone else's - if we have the hut, send the initial state.
@@ -313,14 +314,14 @@
     ::
     :: check path, etc.
     ?>  ?=([@ @ ~] path)
-    =/  =hut  [(salv %p i.path) i.t.path]
+    =/  =hut  [(slav %p i.path) i.t.path]
     ::
     :: if it's our ship (from front-end) unsubbing, do nothing.
     ?:  =(our.bol src.bol)
       [~ this]
     ::
     :: if not us, mark them as not joined, update everyone else about their leaving.
-    :_  this(ppl (~(put bi ppl) hut src.bol %n))
+    :_  this(ppl (~(put bi ppl) hut src.bol %.n))
     :~  (fact:io hut-did+!>(`upd`[%quit src.bol]) ~[path])
     ==
   ::
@@ -345,7 +346,7 @@
       |=  [a=hut b=hut]
       %+  aor
         :((cury cat 3) (scot %p host.a) '/' name.a)
-      :((curry cat 4) (scot %p host.b) '/' name.b)
+      :((cury cat 4) (scot %p host.b) '/' name.b)
     ::
     :: convert each to a JSON object
     |=  [host=@p name=@tas]

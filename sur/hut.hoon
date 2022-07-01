@@ -2,19 +2,19 @@
 /+  *mip
 |%
 :: chat message is pair of author and string
-+$  msg  [who=@p what=@t]
++$  msg   [who=@p what=@t]
 :: msgs in a hut: list of msg
 +$  msgs  (list msg)
 :: hut is host ship and name
-+$  hut  [host=@p name=@tas]
-:: all huts we've created or joined
++$  hut   [host=@p name=@tas]
+:: all huts we've created or joined. in a map with the hut as key and msgs (array) as value
 +$  huts  (jar hut msg)
 :: whitelist - a map of maps. first key is hut, second key is ship, value is bool
-+$  ppl  (mip hut @p ?)
++$  ppl   (mip hut @p ?)
 :: the possible actions. a tagged union
 +$  act
   $%  [%make =hut]
-      [%post =hut =mgs]
+      [%post =hut =msg]
       [%whit =hut who=@p]
       [%kick =hut who=@p]
       [%join =hut]
